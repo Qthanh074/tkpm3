@@ -1,0 +1,174 @@
+﻿@using WedSiteBanHang.Models
+@model ItemGioHang
+
+@{
+    ViewBag.Title = "SuaGioHang";
+    Layout = "~/Views/Layout/ProductLayout.cshtml";
+}
+
+@{ 
+    List<ItemGioHang> lstGioHang = ViewBag.GioHang as List<ItemGioHang>;
+}
+
+<div class="col-md-9 grid-top">
+
+    <!-- Tiêu đề -->
+    <div class="mini-header">
+        <div>Mã SP</div>
+        <div>Tên SP</div>
+        <div>Hình ảnh</div>
+        <div>Số lượng</div>
+        <div>Đơn giá</div>
+        <div>Thành tiền</div>
+        <div>Thao tác</div>
+    </div>
+
+    <!-- Dữ liệu -->
+    @foreach (var item in lstGioHang)
+    {
+        if (Model.MaSP == item.MaSP)
+        {
+            using (Html.BeginForm("CapNhatGioHang", "GioHang"))
+            {
+                <div class="mini-row">
+                    <div>
+                        @item.MaSP
+                        @Html.Hidden("MaSP", item.MaSP)
+                    </div>
+                    <div>@item.TenSP</div>
+                    <div>
+                        <img src="@Url.Content("~/Content/images/" + item.HinhAnh)" width="50" height="50" />
+                    </div>
+                    <div>
+                        @Html.TextBox("SoLuong", item.SoLuong, new { @class = "SoLuongThayDoi" })
+                        <p id="TB_SoLuongThayDoi"></p>
+                    </div>
+                    <div>@item.DonGia.ToString("#,##") đồng</div>
+                    <div>@item.ThanhTien.ToString("#,##")</div>
+                    <div>
+                        <input type="submit" value="Cập nhật" id="btnCapNhatGH" />
+                        @Html.ActionLink("Xóa", "XoaGioHang", new { @MaSP = item.MaSP })
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="mini-row">
+                <div>@item.MaSP</div>
+                <div>@item.TenSP</div>
+                <div><img src="@Url.Content("~/Content/images/" + item.HinhAnh)" width="50" height="50" /></div>
+                <div>@item.SoLuong</div>
+                <div>@item.DonGia.ToString("#,##") đồng</div>
+                <div>@item.ThanhTien.ToString("#,##")</div>
+                <div>
+                    @Html.ActionLink("Sửa", "SuaGioHang", new { @MaSP = item.MaSP }) |
+                    @Html.ActionLink("Xóa", "XoaGioHang", new { @MaSP = item.MaSP })
+                </div>
+            </div>
+        }
+    }
+
+</div>
+
+@*Kiểm tra số lượng thay đổi*@
+<script>
+    $("#btnCapNhatGH").click(function () {
+        //Kiểm tra số lượng không phải là số hoặc nhỏ hơn 0
+        var SoLuong = $(".SoLuongThayDoi").val();
+        if(isNaN(SoLuong) == true || SoLuong < 0)
+        {
+          
+            $("#TB_SoLuongThayDoi").text("Số lượng không hợp lệ");
+            return false;
+        }
+    });
+</script>
+<style>
+    .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    border: 1px solid #dee2e6;
+    padding: 12px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table tr:nth-child(1) {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.table img {
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+input[type="submit"], .table a {
+    margin: 4px;
+    padding: 6px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.table a {
+    background-color: #28a745;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.table a:hover {
+    background-color: #218838;
+}
+
+#btnCapNhatGH {
+    margin-top: 5px;
+}
+
+.SoLuongThayDoi {
+    width: 60px;
+    text-align: center;
+}
+
+#TB_SoLuongThayDoi {
+    color: red;
+    font-size: 13px;
+    margin-top: 3px;
+}
+    .mini-header, .mini-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 1.5fr;
+    padding: 10px;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.mini-header {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+.mini-row img {
+    max-width: 100%;
+    height: auto;
+}
+
+    </style>

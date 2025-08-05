@@ -1,0 +1,259 @@
+﻿@using WedSiteBanHang.Models
+<div class="header-top">
+        <div class="container">
+          <div class="search">
+    @using (Html.BeginForm("LayTuKhoaTimKiem", "TimKiem", FormMethod.Get)) 
+    {
+        <div class="search-box">
+            <input type="text" name="sTuKhoa" placeholder="Nhập tên sản phẩm" />
+            <input type="submit" value="Tìm kiếm" />
+        </div>
+    }
+</div>
+
+            <div class="header-left">
+                <ul style="margin-top: 6px;">
+                    @if (Session["TaiKhoan"] != null )
+                  {
+                      ThanhVien tv = (ThanhVien)Session["TaiKhoan"];
+                        <li style="margin-right: 52px; color: #fcf8e3;" >Chào @tv.HoTen</li>
+                        <li style="margin-right: 20px;"><a @Html.ActionLink("Đăng Xuất", "DangXuat", "Home")></a></li>
+                        if (@tv.TaiKhoan == "Admin")
+                        {
+                            <li style="display: inline;"><a href="@Url.Action("Index","QuanLySanPham")">Quản trị</a></li>
+                        }
+
+                    }
+                    else
+                    {
+                    <li style="display: inline;"><a id="btnDangnhap" class="lock" href="#">Đăng nhập</a></li>
+                    <li style="display: inline;"><a href="@Url.Action("Dangky","Home")">Đăng ký</a></li>
+                   
+
+                    }
+                   
+                </ul>
+                @*Chen partial view gio hang vao layout (tach gio hang sang 1 patrtial view moi)*@
+             @Html.Action("GioHangPartial","GioHang")
+                <div class="clearfix"> </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+
+
+<link href="~/Content/css/style_dangnhap.css" rel="stylesheet" />
+@*===============*@
+<div >
+    <br />
+    @*Tạo 1 div bên ngoài chứa div login-form*@
+    <div id="popup-login">
+        <div class="login-form" id="login-form">
+            <div style="clear:both;text-align:right;margin-bottom:0;">
+                <span id="colse-form" class="btn btn-danger">X</span>
+
+            </div>
+            <h2>Đăng nhập</h2>
+            <div class="form-info">
+             
+                    @using (Ajax.BeginForm("DangNhap", "Home", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "ThongBao" }))
+                     {
+                        <input class="email Taikhoan" name="txtTenDangNhap" placeholder="Tên đăng nhập" required="" type="text">
+                        <input class="password Matkhau" name="txtMatKhau" placeholder="Mật khẩu" required="" type="password">
+                        <p><a href="#">Quên mật khẩu?</a></p>
+                        <h3 style="font-weight:bold;color:red;text-align:left;" id="ThongBao"></h3>
+                        <ul class="login-buttons">
+                            <li><input value="Đăng nhập" type="submit" id="btnDangnhap1"></li>
+                            <li><a href="@Url.Action("Dangky","Home")" class="hvr-sweep-to-left">Đăng ký</a></li>
+
+                        </ul>
+                    }
+                    
+              
+            </div>
+        </div>
+        <!--copyrights-->
+    </div>
+</div>
+
+
+@*Css*@
+<style>
+    body, h1, h2, h3, h4, h5, h6, p, a, li, span, input, label, .header-top, .form-info, .login-buttons {
+        color: #222 !important; /* Màu chữ đen/xám đậm toàn bộ */
+    }
+
+    .header-top {
+        background-color: #f5f5f5; /* nền sáng */
+        padding: 10px 0;
+        font-size: 16px;
+    }
+
+    .header-top a {
+        color: #222 !important;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .header-top a:hover {
+        color: #0097a7;
+    }
+
+    .search input[type="text"] {
+        padding: 7px;
+        border-radius: 5px;
+        border: 1px solid #00bcd4;
+        width: 300px; /* ✅ tăng chiều dài */
+        color: #222;
+    }
+
+    .search input[type="submit"] {
+        background-color: #00bcd4;
+        color: white;
+        padding: 7px 12px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .search input[type="submit"]:hover {
+        background-color: #0097a7;
+    }
+
+    #popup-login {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, .5);
+        z-index: 999;
+        display: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #login-form {
+        background: #ffffff;
+        border-radius: 10px;
+        padding: 20px;
+        color: #222;
+        width: 350px;
+        margin-top: 80px;
+        box-shadow: 0 0 10px rgba(0, 188, 212, 0.3);
+    }
+
+    .form-info input[type="text"],
+    .form-info input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #00bcd4;
+        border-radius: 6px;
+        margin-bottom: 10px;
+        color: #222;
+    }
+
+    .login-buttons input[type="submit"],
+    .login-buttons a {
+        display: inline-block;
+        background-color: #00bcd4;
+        color: white;
+        padding: 10px 15px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-right: 5px;
+        font-weight: bold;
+    }
+
+    .login-buttons input[type="submit"]:hover,
+    .login-buttons a:hover {
+        background-color: #0097a7;
+    }
+
+    .form-info p a {
+        font-size: 13px;
+        color: #444;
+        text-decoration: none;
+    }
+
+    .form-info p a:hover {
+        text-decoration: underline;
+    }
+
+    #colse-form {
+        color: white;
+        background-color: #00bcd4;
+        border: none;
+        padding: 2px 8px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .clearfix {
+        clear: both;
+    }
+    .search-box {
+    display: flex;
+    align-items: center;
+    max-width: 400px;
+    margin: 0 auto; /* căn giữa nếu cần */
+}
+
+.search-box input[type="text"] {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #00bcd4;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+}
+
+.search-box input[type="submit"] {
+    padding: 8px 16px;
+    border: none;
+    background-color: #00bcd4;
+    color: white;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-box input[type="submit"]:hover {
+    background-color: #0097a7;
+}
+
+</style>
+
+@*sử dụng jquery để hiện thị popup đăng nhập*@
+
+<script type="text/javascript">
+
+    @*Hiển thị*@
+    $("#btnDangnhap").click(function () {
+        $("#popup-login").show()
+    }
+        );
+    @*ẩn đi*@
+    $("#colse-form").click(Anform);
+    @*Funtion ẩn form*@
+    function Anform()
+    {
+        $("#popup-login").hide();
+    }
+       @*Ví dụ lấy giá trị textbox*@
+    $("#btnDangnhap1").click( function(){
+        var taikhoan = $(".Taikhoan").val();
+        var matkhau = $(".Matkhau").val();
+
+
+        if(taikhoan == "")
+        {
+            alert("Lỗi")
+            return;
+        }
+
+
+    });
+
+</script>
+

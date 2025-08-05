@@ -1,0 +1,147 @@
+﻿@using WedSiteBanHang.Models
+@model List<ItemGioHang>
+
+@{
+    ViewBag.Title = "XemGioHang";
+    Layout = "~/Views/Layout/ProductLayout.cshtml";
+}
+@if(Model == null || Model.Count == 0)
+{
+    <h1 style="color:#000">Giỏ hàng rỗng</h1>
+}
+else
+{
+  <div class="container mt-4">
+        <h2 class="text-center mb-4">🛍️ Giỏ hàng của bạn</h2>
+
+        <table class="table table-bordered table-hover text-center align-middle">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Mã SP</th>
+                    <th>Tên SP</th>
+                    <th>Hình ảnh</th>
+                    <th>Số lượng</th>
+                    <th>Đơn giá</th>
+                    <th>Thành tiền</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.MaSP</td>
+                        <td>@item.TenSP</td>
+                        <td>
+                            <img src="@Url.Content("~/Content/images/" + item.HinhAnh)" class="img-thumbnail" style="max-width: 60px;" />
+                        </td>
+                        <td>@item.SoLuong</td>
+                        <td>@item.DonGia.ToString("#,##") đồng</td>
+                        <td>@item.ThanhTien.ToString("#,##") đồng</td>
+                        <td>
+                            @Html.ActionLink("✏️ Sửa", "SuaGioHang", new { @MaSP = item.MaSP }, new { @class = "btn btn-sm btn-warning" }) 
+                            @Html.ActionLink("🗑️ Xóa", "XoaGioHang", new { @MaSP = item.MaSP }, new { @class = "btn btn-sm btn-danger ml-1" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        @using (Html.BeginForm("DatHang", "GioHang"))
+        {
+            if (Session["TaiKhoan"] == null)
+            {
+                <div class="card shadow p-4 mb-4">
+                    <h4 class="mb-3 text-primary">Thông tin khách hàng</h4>
+                    <div class="form-group">
+                        <label>Họ tên</label>
+                        @Html.TextBox("TenKH", null, new { @class = "form-control", @id = "TenKH" })
+                        <small id="TB_TenKH" class="text-danger"></small>
+                    </div>
+                    <div class="form-group">
+                        <label>Địa chỉ</label>
+                        @Html.TextArea("DiaChi", null, new { @class = "form-control", @rows = "2", @id = "DiaChi" })
+                        <small id="TB_DiaChi" class="text-danger"></small>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        @Html.TextBox("Email", null, new { @class = "form-control", @id = "Email" })
+                        <small id="TB_Email" class="text-danger"></small>
+                    </div>
+                    <div class="form-group">
+                        <label>Điện thoại</label>
+                        @Html.TextBox("SoDienThoai", null, new { @class = "form-control" })
+                    </div>
+                </div>
+            }
+
+            <div class="text-right">
+                <input type="submit" value="Đặt hàng" class="btn btn-primary btn-lg mr-2" id="btnDatHang" />
+                @Html.ActionLink("🛍️ Mua tiếp", "Index", "Home", new { @class = "btn btn-success btn-lg" })
+            </div>
+        }
+    </div>
+}
+<script>
+       $("#btnDatHang").click(function () {
+        var loi = 0;
+        if($("#TenKH").val() == "")
+        {
+            $("#TB_TenKH").text("Tên khách hàng không được bỏ trống")
+            // Ngăn sự kiện submi đến server
+            loi++;
+        }
+        else
+        {
+
+            $("#TB_TenKH").text("")
+        }
+        if ($("#DiaChi").val() == "") {
+            $("#TB_DiaChi").text("Địa chỉ không được bỏ trống")
+            // Ngăn sự kiện submi đến server
+            loi++;
+        }
+        else {
+
+            $("#TB_DiaChi").text("")
+        }
+        var loi;
+        dinhdang = /^[0-9A-Za-z]+[0-9A-Za-z_]*@@[\w\d.]+\.\w{2,4}$/;
+        KTemail = dinhdang.test($('#Email').val());
+        if (!KTemail) {
+            $('#TB_Email').text("Email không hợp lệ");
+            loi++;
+        }
+        if(loi != 0)
+        {
+            return false;
+        }
+    });
+
+</script>
+<style>
+  <style>
+    .cart-table + .card {
+        margin-top: 10px !important;
+    }
+
+    .table {
+        margin-bottom: 10px !important;
+    }
+
+    .card {
+        margin-top: 0 !important;
+        padding-top: 10px;
+    }
+
+    .btn-lg {
+        padding: 8px 20px;
+    }
+</style>
+
+</style>
+
+
+
+
+

@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>New Store A Ecommerce Category Responsive Website Template | Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="keywords" content="New Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, Smartphone Compatible web template, free webdesigns">
+    
+    <!-- CSS Files -->
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" type="text/css" media="all">
+    <link href="~/Content/css/style.css" rel="stylesheet" type="text/css" media="all">
+    <link href="~/Content/css/memenu.css" rel="stylesheet" type="text/css" media="all">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900" rel="stylesheet" type="text/css">
+    
+    <!-- Scripts -->
+    <script src="~/Content/js/jquery.min.js"></script>
+    <script src="~/Content/js/memenu.js"></script>
+    <script src="~/Content/js/simpleCart.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Content/js/responsiveslides.min.js"></script>
+    
+    <script type="application/x-javascript">
+        addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+        function hideURLbar(){ window.scrollTo(0,1); }
+    </script>
+    
+    <script>
+        $(document).ready(function(){
+            $(".memenu").memenu();
+            
+            // Slider initialization
+            $("#slider").responsiveSlides({
+                auto: true,
+                nav: true,
+                speed: 500,
+                namespace: "callbacks",
+                pager: true
+            });
+        });
+    </script>
+    <style>
+    body, h1, h2, h3, h4, h5, h6, p, a, li, span, input, label, .banner-text, .footer, .footer p, .footer li, .footer a {
+        color: #222 !important; /* Đen xám đậm */
+    }
+
+    .footer a:hover,
+    .footer li a:hover {
+        color: #000 !important; /* Khi hover thì đen hẳn */
+    }
+
+    .banner-btn {
+        color: #fff !important; /* Giữ chữ nút sáng để nổi bật */
+        background-color: #222 !important;
+        border-color: #222 !important;
+    }
+
+    .banner-btn:hover {
+        background-color: #000 !important;
+        color: #fff !important;
+    }
+</style>
+
+</head>
+
+<body>
+    <!-- Header Section -->
+  <div class="header">
+    @Html.Partial("~/Views/Layout/HeaderToParital.cshtml")
+
+    <div class="container">
+        <div class="head-top d-flex align-items-center justify-content-between">
+            <div class="logox" style="max-width: 150px;">
+                <a href="@Url.Action("Index", "Home")">
+                    <img src="~/Content/AdminLayout/images/logo.jpeg" alt="" style="width: 100%;" />
+                </a>
+            </div>
+
+            <div class="menu-container">
+                @Html.Action("MenuParial", "Home")
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Banner/Slider Section -->
+  <!-- Banner / Slider Section -->
+<div class="banner">
+    <div class="container">
+        <div class="callbacks_container">
+            <ul class="rslides callbacks callbacks1" id="slider">
+                <li>
+                    <div class="banner-text">
+                        <h3>Khám phá sản phẩm mới</h3>
+                        <p>Hàng ngàn sản phẩm công nghệ chính hãng, giá ưu đãi mỗi ngày đang chờ bạn!</p>
+                        <a class="banner-btn" href="@Url.Action("XemThongTin", "Home")">Tìm hiểu thêm</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="banner-text">
+                        <h3>Giảm giá lên tới 50%</h3>
+                        <p>Đừng bỏ lỡ các chương trình khuyến mãi cực sốc chỉ có tại cửa hàng chúng tôi!</p>
+                        <a class="banner-btn" href="@Url.Action("XemThongTin", "Home")">Xem chi tiết</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="banner-text">
+                        <h3>Giao hàng toàn quốc</h3>
+                        <p>Chúng tôi giao hàng nhanh chóng, an toàn và miễn phí cho đơn hàng đủ điều kiện.</p>
+                        <a class="banner-btn" href="@Url.Action("XemThongTin", "Home")">Tìm hiểu thêm</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Main Content Section -->
+    <div class="content">
+        @RenderBody()
+    </div>
+
+    <!-- Footer Section -->
+    <div class="footer">
+        <div class="container">
+            <div class="footer-top-at">
+                <div class="col-md-4 amet-sed">
+                    <h4>MORE INFO</h4>
+                    <ul class="nav-bottom">
+                        <li><a href="#">How to order</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="@Url.Action("LienHe", "Home")">Location</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Membership</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-4 amet-sed">
+                    <h4>CONTACT US</h4>
+                    <p>Contrary to popular belief</p>
+                    <p>The standard chunk</p>
+                    <p>Office: 0339445630</p>
+                    <ul class="social">
+                        <li><a href="https://www.facebook.com/n81005"><i></i></a></li>
+                        <li><a href="#"><i class="twitter"></i></a></li>
+                        <li><a href="#"><i class="rss"></i></a></li>
+                        <li><a href="#"><i class="gmail"></i></a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-4 amet-sed">
+                    <h4>Newsletter</h4>
+                    <p>Sign Up to get all news updates and promotions</p>
+                    <form>
+                        <input type="text" value="" onfocus="this.value='';" onblur="if (this.value == '') {this.value ='';}">
+                        <input type="submit" value="Sign up">
+                    </form>
+                </div>
+                
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        
+        <div class="footer-class">
+            <p>© 2015 New store All Rights Reserved | Design by <a href="http://w3layouts.com/" target="_blank">W3layouts</a></p>
+        </div>
+    </div>
+</body>
+</html>
